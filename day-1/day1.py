@@ -18,7 +18,7 @@ def get_calibration_value(line):
 print("Solution Part 1: ", sum(map(get_calibration_value, lines)))
 
 numbers_str = ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "zero"]
-numbers_int = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
+numbers_int = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
 numbers = dict(zip(numbers_str, numbers_int))
 
 
@@ -32,9 +32,11 @@ numbers = dict(zip(numbers_str, numbers_int))
 line = "a4hnone"
 digit_values = list(map(str.isdigit, line))
 first_digit_index = digit_values.index(True)
+first_digit_number = line[first_digit_index]  # str
 
 digit_values.reverse()
 last_digit_index = (len(digit_values)-1) - digit_values.index(True)
+last_digit_number = line[last_digit_index]  # str
 
 number_positions = {}
 for number in numbers_str:
@@ -48,12 +50,33 @@ for number in numbers_str:
 
 if number_positions:
     # not empty dict
+    # look for the smallest index and associated number_str
+    save_min = 10 # ensure first true
+    save_max = -1 # ensure first true
+    first_str_number, last_str_number = 100, -1
+    for key, value_list in number_positions.items():
+        first_str_ind = min(value_list)
+        last_str_ind = max(value_list)
+        if first_str_ind < save_min:
+            save_min = first_str_ind
+            first_str_number = numbers[key]
+        elif last_str_ind > save_max:
+            save_max = last_str_ind
+            last_str_number = numbers[key]
 
-    # TDOOOOOOOOO
-    pass
 
-# I want to keep the two lowest indexes
-ind1, ind2 = [first_digit_index, last_digit_index, first_num_index, last_num_index].sort()[:2]
+# last_str_number and its index
+# first_str_number and its index
+# last_digit_number and its index
+# first_digit_number and its index
 
-calibration_value_b = int("".join([line[ind1], line[ind2]]))
+final_candidates = {first_digit_number: first_digit_index, 
+                    last_digit_number: last_digit_index, 
+                    first_str_number: first_str_ind, 
+                    last_str_number: last_str_ind}
+
+calibration_list = list(sorted(final_candidates.keys(), key=lambda item_tuple: item_tuple[1]))
+calibration_value_b = int("".join([calibration_list[0], calibration_list[-1]]))
+
+print(calibration_value_b)
 
