@@ -32,7 +32,7 @@ def get_cube_colors(set_cubes):
 
 
 def is_valid_game(game):
-    # Game=" 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green\n"
+    # Game=" 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green"
     game.replace(" ", "")
     game_sets = game.split(";")
 
@@ -50,17 +50,58 @@ def is_valid_game(game):
 def game_id(game_id_str):
     return int(game_id_str.split(" ")[1])
 
-with open("./input.txt", "r") as myfile:
+
+# As you continue your walk, the Elf poses a second question: 
+# in each game you played, what is the fewest number of cubes 
+# of each color that could have been in the bag to make the 
+# game possible?
+# highest value of every color
+# power of the minimum set of cubes = R x G x B
+# 
+# Each game has more than one set, each set has three numbers RBG 
+# associated
+
+def get_minimum_set(game):
+    # Game=" 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green"
+    game.replace(" ", "")
+    game_sets = game.split(";")
+
+    blue_min, red_min, green_min = -1, -1, -1 
+    for game_set in game_sets:
+        set_cubes = game_set.split(",")
+        blue, red, green = get_cube_colors(set_cubes)
+
+        if blue > blue_min:
+            blue_min = blue
+        if red > red_min:
+            red_min = red
+        if green > green_min:
+            green_min = green
+    return blue_min, red_min, green_min
+
+
+def set_power(blue_min, red_min, green_min):
+    return blue_min * red_min * green_min
+
+with open("./day-2/input.txt", "r") as myfile:
     lines = myfile.readlines()
 
     sum_game_id = 0
-    for line in myfile.readlines():
+    sum_power_minimum_sets = 0
+    for line in lines:
         line = line.replace("\n", "")
         game_id_str, game = line.split(":")
-            
+        
         if is_valid_game(game):
             sum_game_id += game_id(game_id_str)
-        else: 
-            continue
 
-print(sum_game_id)
+        blue_min, red_min, green_min = get_minimum_set(game)
+        sum_power_minimum_sets += set_power(blue_min, red_min, green_min)
+
+print("Part 1: ", sum_game_id)
+print("Part 2: ", sum_power_minimum_sets)
+
+
+
+
+
