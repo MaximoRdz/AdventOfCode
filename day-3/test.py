@@ -24,19 +24,19 @@ ADJACENT_IND = [
 ]
 
 def is_adjacent(i, j):
-    adjacent = 0
+    adjacent = False
     neighbor_gears = []
     for y, x in ADJACENT_IND:
         if (0 <= i+y < NROWS) and (0 <= j+x < NCOLS):
             neighbor_char = motor_matrix[i+y][j+x]
             
             if is_symbol(neighbor_char):
-                adjacent += 1
+                adjacent = True
                 # gear -> *
                 if neighbor_char == "*":
                     neighbor_gears.append([i+y, j+x])
 
-    return bool(adjacent), neighbor_gears
+    return adjacent, neighbor_gears
 
 
 
@@ -57,8 +57,9 @@ for i in range(NROWS):
             
 
             # check if adjacent
-            adjacent, neighbor_gears = is_adjacent(i, j)
-            print(named_int, adjacent)
+            adjacent_aux, neighbor_gears = is_adjacent(i, j)
+            adjacent += adjacent_aux # only one is sufficient
+
             gears_number.append(neighbor_gears)
 
             if j == NCOLS-1 and adjacent and named_int:
@@ -74,7 +75,7 @@ for i in range(NROWS):
         
 
 
-# print(adjacent_list)
+print(adjacent_list)
 print(sum([number for number, _ in adjacent_list]))
 
 # The missing part wasn't the only issue - one of the gears 
