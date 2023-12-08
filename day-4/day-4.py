@@ -2,7 +2,7 @@ import re
 
 
 scracth_cards = {}
-with open("day-4/example.txt", "r") as file:
+with open("day-4/input.txt", "r") as file:
     for line in file.readlines():
         key, value = line.split(":")
         first_list, last_list = value.split("|")
@@ -31,7 +31,7 @@ for key, value in scracth_cards.items():
     scracth_cards[key].append(result)
     ans += card_value(result)
 
-print(ans)
+print("Solution Part 1: ", ans)
 
 # problem 1: careful with how you split string if you keep "" values
 # you'll way more matches than the reality
@@ -48,16 +48,45 @@ print(ans)
 # so we know the index and the winning numbers of each card
 
 total_card_num = dict.fromkeys(scracth_cards.keys())
-print(total_card_num)
-# def winning_recursion(card_ind):
-#     # card_ind: card 1 example
-#     # card_num: matching numbers card 1 -> 4
-#     card_ind_int = int(re.findall("\d+", card_ind)) # i.e. 1
-#     card_num = scracth_cards[card_ind][2]
-#     for copy_ind_int in range(card_ind_int+1, card_ind_int+card_num+1):
-#                             # 2,            1+4+1=5     -> 2, 3, 4, 5
-#         copy_card_ind = f"Card {copy_ind_int}"  # i.e. Card 2
-#         copy_card_num = scracth_cards[copy_card_ind][2] # i.e. 2
-#         return winning_recursion(copy_card_ind)
+# Initialized dict
+for key in total_card_num.keys():
+    total_card_num[key] = 0
 
-# winning_recursion("Card 1", 3)
+
+# card 1 children
+def get_key(child_int):
+    n = 4 - len(str(child_int))
+    key = "Card" + n*" " + str(child_int)
+    return key
+
+def get_children(card_ind):
+    card_int = int(re.findall("\d+", card_ind)[0])
+    num_children = scracth_cards[card_ind][2]
+    children = [get_key(child) for child in range(card_int+1, 
+                                                   card_int+num_children+1)]
+    return children
+
+
+def save_children_copy(children):
+    for child in children:
+        total_card_num[child] += 1
+
+
+def check_children(children):
+    """
+    Recursive solution of the problem (not best run time)
+    """
+    if not children:
+        # check is not empty
+        return 0
+    else:
+        # print(children)
+        save_children_copy(children)
+        aux = []
+        for child in children:
+            aux.extend(get_children(child))
+        return check_children(aux)
+
+a = check_children(list(total_card_num.keys()))
+# print("Recursive prizes: ", total_card_num)
+print("Solution Part 2: ", sum(list(total_card_num.values())))
