@@ -59,12 +59,16 @@ class PipesMap:
     def check_connected(self, i, j):
         # which of the adjacent pipes point to i, j or false
         dr = [(0, -1), (0, 1), (-1, 0), (1, 0)]
+        connections = []
         for dy, dx in dr:
             c1, c2 = self.pipe_connections(i+dy, j+dx)
             if c1 == (i, j) or c2 == (i, j):
                 # adjacent pipe connected to current tile
-                return i+dy, j+dx
-        return False
+                connections.append((i+dy, j+dx))
+        if connections:
+            return connections
+        else:
+            return False
 
 
 
@@ -76,7 +80,7 @@ class PipesMap:
         (y1, x1), (y2, x2) = self.pipe_connections(start_sym, *start_coords)
         print((y1, x1), (y2, x2))
 
-assert True, "check git push"
+
 obj = PipesMap("day-10/example.txt")
 print(*obj.map_matrix, sep="\n")
 print(obj.check_connected(2, 1))
