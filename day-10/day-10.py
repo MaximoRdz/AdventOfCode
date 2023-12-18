@@ -61,6 +61,7 @@ class PipesMap:
         # check if (i1, j1) points to (i, j) 
         tile = self.get_tile(i1, j1)
         (dy1, dx1), (dy2, dx2) = self.symbol_coords[tile]
+
         if (i1+dy1, j1+dx1) == (i, j) or (i1+dy2, j1+dx2) == (i, j):
             return True
         return False
