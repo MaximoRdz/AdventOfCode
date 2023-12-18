@@ -13,9 +13,9 @@
 class PipesMap:
     # i, j convention
     symbol_coords = {
-        "|": ((-1, 0), (+1, 0)), 
-        "-": ((0, -1), (0, +1)), 
-        "L": ((-1, 0), (0, +1)), 
+        "|": ((-1, 0), (+1, 0)),          
+        "-": ((0, -1), (0, +1)),          
+        "L": ((-1, 0), (0, +1)),          
         "J": ((-1, 0), (0, -1)), 
         "7": ((+1, 0), (0, -1)), 
         "F": ((+1, 0), (0, +1)), 
@@ -28,7 +28,7 @@ class PipesMap:
         self.map_matrix = self.open(file)
         self.NROWS = len(self.map_matrix)
         self.NCOLS = len(self.map_matrix[0])
-        self.visited_matrix = [[0 for j in range(self.NCOLS)] for i in range(self.NROWS)]
+        self.visited_matrix = [[False for j in range(self.NCOLS)] for i in range(self.NROWS)]
         self.count = 0
 
         self.walk_map()
@@ -65,10 +65,21 @@ class PipesMap:
             return True
         return False
 
+    def replace_S(self, connections):
+        c1, c2 = connections
+        c1 = c1[0]-self.S_COORDS[0], c1[1]-self.S_COORDS[1]
+        c2 = c2[0]-self.S_COORDS[0], c2[1]-self.S_COORDS[1]
+        for key, (a, b) in self.symbol_coords.items():
+            if (a == c1 or b == c1) and (a == c2 or b == c2):
+                self.map_matrix[self.S_COORDS[0]][self.S_COORDS[1]] = key
+
+
+
     def starting_points(self):
         # get all the points that are connected to S
+        # give S_coords the corresponding tile 
         iS, jS = self.S_COORDS
-        self.visited_matrix[iS][jS] = self.count
+        self.visited_matrix[iS][jS] = True
         self.count += 1
         dr = (
             (0, -1), (-1, 0), 
@@ -79,9 +90,9 @@ class PipesMap:
             i1, j1 = iS+dy, jS+dx
             if self.check_coords(i1, j1) and self.check_connected(iS, jS, i1, j1):
                 next_steps.append((i1, j1))
-                self.visited_matrix[i1][j1] = self.count
+                self.visited_matrix[i1][j1] = True
         self.count += 1
-
+        self.replace_S(next_steps)
         return next_steps
     
     def next(self, i, j):
@@ -92,7 +103,7 @@ class PipesMap:
             i1, j1 = i+dy, j+dx
             if self.check_coords(i1, j1) and not self.visited_matrix[i1][j1] and self.check_connected(i,j, i1,j1):
                 # valid coord and not visited already and (i1, j1) points to (i, j)
-                self.visited_matrix[i1][j1] = self.count
+                self.visited_matrix[i1][j1] = True
                 return i1, j1
         return None
         
@@ -113,18 +124,51 @@ class PipesMap:
                     # closed path
                     continue
                 next_coords.append(next_coord)
-            self.count += 1
-            start_coords = next_coords
+
             if not next_coord:
                 # the list is empty
                 aux = False
+            else:
+                self.count += 1
+                start_coords = next_coords
 
     def get_furthest(self):
-        flatten_map = [elem for row in self.visited_matrix for elem in row]
-        return max(flatten_map)
+        return self.count
+    
+    def check_enclosed(self, i, j):
+        # point in polygon, ray casting algo
+        # even -> outside -> %2 = 0 no enclosed tile
+        # odd -> inside   -> %2 = 1 is enclosed tile
+        intersection = 0
+        for x in range(j+1, self.NCOLS):
+            if self.visited_matrix[i][x] and self.get_tile(i, x) in {"F", "7", "|"}:
+                # add one intersection with the border
+                # treat carefully "-" characters doesnt count
+                # corner combinations:
+                # L-J  counts as two intersections
+                # L-7  counts as one intersection
+                # F-J  counts as one intersection
+                # F-7  counts as two intersections
+                # so we can choose L and J or F and 7
+                intersection += 1
+        
+        return intersection % 2
+
+    def enclosed_tiles(self):
+        ans = 0
+        for i in range(self.NROWS):
+            for j in range(self.NCOLS-1):
+                if not self.visited_matrix[i][j]:
+                    ans += self.check_enclosed(i, j)
+        return ans
+    
+
             
     
 obj = PipesMap("day-10/input.txt")
 
-print(obj.get_furthest())
-
+print("Solution Part 1: ", obj.get_furthest())
+# print(*obj.map_matrix, sep="\n")
+# print(*obj.visited_matrix, sep="\n")
+print("Solution Part 2: ", obj.enclosed_tiles())
+# 309 is too high -> mistake solved: I wasn't giving S its corresponding tile value
