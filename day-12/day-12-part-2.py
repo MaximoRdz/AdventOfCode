@@ -55,16 +55,14 @@ def count(cfg, blocks):
     cache[key] = result
     return result
 
-
-
-
 ans = 0 
 for record, values in records:
     record = "?".join([record]*5)
     values *= 5 
-    cache.clear()
     ans += count(record, tuple(values))
+    cache.clear()
+
     
 
-print("Solution Part 1: ", ans)
+print("Solution Part 2: ", ans)
 print(cache)
