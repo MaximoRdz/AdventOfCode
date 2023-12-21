@@ -39,7 +39,7 @@ def count(cfg, blocks):
         return 0 if "#" in cfg else 1
     
     result = 0
-    # ? can only be a . or a #
+    # ? can only be a . or a # so we sum both possibilities
     if cfg[0] in ".?":
         # Treat ? as a dot (first possibilty)
         # if ? is a dot remove this dot a check the rest of the str
