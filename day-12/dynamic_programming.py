@@ -66,16 +66,26 @@
 
 # print(sum(3))
 
-# Write a function that takes tow inputs n and m and outpts the number of unique paths
-# from the top left corner to bottom right corner of a n x m grid, you can only move d 
-# or r one unit at a time
+# # Write a function that takes tow inputs n and m and outpts the number of unique paths
+# # from the top left corner to bottom right corner of a n x m grid, you can only move d 
+# # or r one unit at a time
 
 
-def paths(n, m, i, j):
-    # base cases, bottom and right bordes
-    if i == n-1 or j == m-1:
-        return 0
+# def paths(n, m):
+#     # base cases, bottom and right bordes
+#     if n==1 or m==1:
+#         return 1
     
-    result = 0
+#     result = 0
+#     if n>1 or m>1:
+#         result += paths(n-1, m) + paths(n, m-1)    
+#     return result
+
+# print(paths(2, 4))
+
+
+    
+
+
     
     
