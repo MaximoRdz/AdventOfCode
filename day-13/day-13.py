@@ -33,7 +33,7 @@ def check_horizontal(pattern, n, m):
     
     if n>0 and m<len(pattern):
         if horizontal_symmetry(pattern, n, m):
-             return check_vertical(pattern, n-1, m+1)
+             return check_horizontal(pattern, n-1, m+1)
         else:
             return False
 
