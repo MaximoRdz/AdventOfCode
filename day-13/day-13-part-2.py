@@ -81,6 +81,7 @@ def check_pattern(pattern):
         n, m = int(horizontal-0.5), int(horizontal+0.5)
 
         if check_horizontal(pattern, n, m, False):
+            print("\thorizontal sym")
             result += 100*(horizontal+0.5)
 
     # check vertical
@@ -88,6 +89,7 @@ def check_pattern(pattern):
         vertical = 0.5+i
         n, m = int(vertical-0.5), int(vertical+0.5)
         if all(map(lambda x: check_vertical(x, n, m, False), pattern)):
+            print("\tvertical sym")
             result += vertical+0.5
     
 
@@ -95,12 +97,13 @@ def check_pattern(pattern):
 
 ans = 0
 i = 1
-for pattern in patterns[2:]:
+for pattern in patterns:
     print(i, ": ")
     ans += check_pattern(pattern)
     i += 1
 
 print("Solution Part 2: ", int(ans))
 # 18700 too low
+# this  answer is getting too complicated, lets try again
 
 
