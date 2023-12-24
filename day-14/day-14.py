@@ -40,7 +40,7 @@ class northPlatform:
 
 
     def cycle(self):
-        for i in range(4):
+        for _ in range(4):
             self.north()
             self.rotate_90()
 
@@ -59,9 +59,23 @@ obj = northPlatform(platform)
 
 # print("Solution Part 1: ", obj.load())
 t = 1
-while t < 1e2:
+T = 1e9
+while t < 100:
     obj.cycle()
+    
     print(t, obj.load(False))
+    
+
     t += 1
+
+# print(*platform, sep="\n")
+# print(50*"-")
+# obj.cycle()
+# obj.cycle()
+# obj.cycle()
+
+# print(*obj.platform, sep="\n")
+
+
 
 
