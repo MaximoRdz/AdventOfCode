@@ -58,23 +58,41 @@ class northPlatform:
 obj = northPlatform(platform)
 
 # print("Solution Part 1: ", obj.load())
-t = 1
-T = 1e9
-while t < 100:
+
+
+visited = set()
+obj.cycle()
+visited.add(obj.load(False))
+i = 1
+N = int(1e9 -1) # len(sample)-1
+cycle = []
+while i<1e3:
     obj.cycle()
-    
-    print(t, obj.load(False))
-    
+    current = obj.load(False)
 
-    t += 1
+    if current in visited:
+        cycle.append(current)
+        if len(cycle) > 4 and cycle[0]==cycle[-2] and cycle[1]==cycle[-1]:
+            print("Cycle found", cycle[:-2])
+            T = len(cycle[:-2]) 
+            print("Period: ", T)
+            tf = i-2
+            print("tf: ", tf)
+            break
+    else:
+        cycle.clear()
+    # print(i, current, len(visited), cycle)
+    i += 1
+    visited.add(current)
 
-# print(*platform, sep="\n")
-# print(50*"-")
-# obj.cycle()
-# obj.cycle()
-# obj.cycle()
 
-# print(*obj.platform, sep="\n")
+print("Last index: ", N)
+print("Total left values to compute: ", N-tf)
+cycles = (N-tf)//T
+print("Complete cycles contained: ", cycles)
+ans = N - (tf+1+T*cycles)
+print(ans)
+print("Solution: ", cycle[ans])
 
 
 
