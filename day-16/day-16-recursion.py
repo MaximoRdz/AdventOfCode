@@ -1,8 +1,4 @@
-import sys 
-sys.setrecursionlimit(2000)
-print(sys.getrecursionlimit())
 
-assert False
 
 with open("day-16/input.txt", "r") as file:
     matrix = file.read().split("\n")
