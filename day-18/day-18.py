@@ -52,4 +52,6 @@ for i in range(MIN_Y, MAX_Y+1):
 result += len(lagoon_edge)
 print("Solution Part 1: ", result)
 
+# 93240 too high
+
 
