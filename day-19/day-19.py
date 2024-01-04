@@ -1,6 +1,6 @@
-from collections import defaultdict
+from collections import defaultdict, deque
 
-with open("day-19/example.txt", "r") as file:
+with open("day-19/input.txt", "r") as file:
     workflow, ratings = file.read().split("\n\n")
 
 def ratings_to_dict(rating):
@@ -23,9 +23,9 @@ def operation(s, xmas_dict):
         b, c = other.split(":")
         b = int(b)
 
-        if not compare(a, b, op, xmas_dict):
+        if compare(a, b, op, xmas_dict):
             return c
-        return True
+        return False
     return s
 
 
@@ -35,14 +35,30 @@ for w in workflow.split("\n"):
     instructions = other.split(",")
     workflow_dict[key] = instructions
 
-ratings = ratings.split("\n")
-for rating in ratings[0:1]:
+def classifiy_rating(rating_values):
+    START = "in"
+    wq = deque([START])
+    ans = -1
+    while wq:
+        key = wq.popleft()
+        for s in workflow_dict[key]:
+            op_ans = operation(s, rating_values)
+            if op_ans == False:
+                continue
+            elif op_ans == "A" or op_ans == "R":
+                ans = op_ans
+                break
+            else:
+                wq.append(op_ans)
+                break
+    return ans
+
+result = defaultdict(int)
+
+for rating in ratings.split("\n"):
     rating_values = ratings_to_dict(rating)
+    if classifiy_rating(rating_values) == "A":
+        for key, value in rating_values.items():
+            result[key] += value
 
-START = "in"
-current_key = START
-ans = 0
-while ans != "A" or ans != "R":
-    for s in workflow_dict[current_key]:
-        print(s, ": ", operation(s, rating_values))
-
+print("Solution Part 1: ", sum(result.values()))
