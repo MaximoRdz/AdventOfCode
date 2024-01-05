@@ -22,6 +22,7 @@
 
 
 from heapq import heappop, heappush
+from math import lcm
 
 with open("day-20/input.txt", "r") as file:
     data = file.read().splitlines()
@@ -92,57 +93,43 @@ for key in system.keys():
     else:
         system_state[key] = DeadEndModule()
 
-def get_system_stamp(system_state):
-    stamp = []
-    for key in system_state.keys():
-        if system[key]["type"] == "bc":
-            continue
-        elif system[key]["type"] == "%":
-            stamp.append((key, system_state[key].state))
-        elif system[key]["type"] == "&":
-            stamp.append((key, system_state[key].last_pulses))
-        else:
-            continue
-    return tuple(stamp)
 
+target = "rx"
+(target_in, ) = system[target]["in"]   # only one value expected to unpack
+print(system[target_in], "will send a low pulse if 'in' pulses are all high")
 
-def push_btn():
+previous_nodes = system[target_in]["in"]
+final_list = {}
+def push_btn(i):
     start_btn = (0, "btn", "broadcaster", -1) # priority, emisor, receptor, pulse 
                                                                         # lo(-1) hi(1)
     heap = []
     heappush(heap, start_btn)
-    memoization = {}
+
     while heap:
         p, emisor, receptor, pulse = heappop(heap)
 
-        mkey = emisor, receptor, pulse
-        if mkey in memoization:
-            continue
-
-        if receptor == "rx" and pulse == -1:
+        if not previous_nodes:
+            print("all periods found")
             return True
+
+        if emisor in previous_nodes and pulse == 1:
+            final_list[emisor] = i
+            previous_nodes.remove(emisor)
+
         # process pulse between em and re
         module_response = system_state[receptor].process_pulse(emisor, pulse)
         if module_response:
             new_receptors, new_pulse = module_response
             for new_receptor in new_receptors:
                 heappush(heap, (p+1, receptor, new_receptor, new_pulse))
-        else:
-            memoization[mkey] = False
 
-    return False
-
-i = 0
+    
+i = 1
 while True:
-    i += 1
-    if push_btn():
+    if push_btn(i):
         break
-print("Solution Part 2: ", i)
+    i += 1
 
-
-
-
-
-
-
+print("Solution Part 2: ", lcm(*final_list.values()))
 
