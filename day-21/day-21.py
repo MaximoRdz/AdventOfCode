@@ -16,7 +16,6 @@ for i, line in enumerate(data):
 
 NROWS, NCOLS = len(grid), len(grid[0])
 
-
 MAX_STEPS = 64
 q = deque([(*START, 0)]) # state i, j, steps
 garden_plots = {START}
@@ -43,7 +42,4 @@ while q:
   
 
 
-
 print("Solution Part 1: ", len(garden_plots))
-
-
