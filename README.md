@@ -7,5 +7,5 @@
 * [Dijkstra Algorithm](https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm)
 * [HEAP Data Structure](https://en.wikipedia.org/wiki/Heap_(data_structure))
 * Polygon Areas: 
-    * [Shoelace Th](https://en.wikipedia.org/wiki/Shoelace_formula)
-    * [Pick's Th](https://en.wikipedia.org/wiki/Pick%27s_theorem)
+    * [Shoelace Theorem](https://en.wikipedia.org/wiki/Shoelace_formula)
+    * [Pick's Theorem](https://en.wikipedia.org/wiki/Pick%27s_theorem)
