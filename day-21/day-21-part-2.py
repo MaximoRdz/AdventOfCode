@@ -1,4 +1,4 @@
-from collections import deque, defaultdict
+from collections import deque
 
 with open("day-21/input.txt", "r") as file:
     data = file.read().splitlines()
@@ -22,7 +22,6 @@ print("Grid Size: ", N, "Max steps: ", MAX_STEPS)
 contained_grids = (2*MAX_STEPS + 1) // N
 print("Large grid size can contain ", contained_grids, " NxN grids")
 assert contained_grids % 2 == 1, "There is and even number of grids in the max allowed grid"
-print((contained_grids // 2 + 1) * N)
 
 def reach(i0, j0, max_steps):
     q = deque([(i0, j0, max_steps)]) # state: i, j, steps
@@ -50,17 +49,20 @@ def reach(i0, j0, max_steps):
 
     return len(garden_plots)
 
-#               O O O # O O O
-#               O O # # # O O
-#               O # # # # # O
-#               O O # # # O O
-#               O O O # O O O
+#                     E
+#               O O E X E O O
+#               O E X E X E O
+#               E X E X E X E
+#               O E X E X E O
+#               O O E X E O O
+#                     E  
 # Edge cases 
 # top, bottom, left and right
 # partially filled diagonal grids
 # inner grids: 
 #     * 
-
+# odd: 1, 8, 16 , 24, 46
+#        7  8   8   22 
 even = reach(*START, 2*N)
 odd = reach(*START, 2*N+1)
 print("Allowed states with even steps: ", even)
