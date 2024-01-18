@@ -1,48 +1,70 @@
-import numpy as np
+# This code is NOT my property
+# check author: 
+# https://github.com/hyper-neutrino/advent-of-code/blob/main/2023/day21p2.py
 
-positions = [[1, 0], [0, 1]]
-a, b = positions
+from collections import deque
 
-a, b = np.array(a), np.array(b)
+with open("day-21/input.txt", "r") as file:
+    grid = file.read().splitlines()
 
-a_mod = np.sqrt(a.dot(a))
-b_mod = np.sqrt(b.dot(b))
+sr, sc = next((r, c) for r, row in enumerate(grid) for c, ch in enumerate(row) if ch == "S")
 
-cosine_angle = a.dot(b) / (a_mod*b_mod)
+assert len(grid) == len(grid[0])
 
-angle = np.arccos(cosine_angle) * 180 / np.pi
+size = len(grid)
+steps = 26501365
 
-print(angle)
+assert sr == sc == size // 2
+assert steps % size == size // 2
 
-# Assume we have a list of points
+def fill(sr, sc, ss):
+    ans = set()
+    seen = {(sr, sc)}
+    q = deque([(sr, sc, ss)])
 
-centroids = [
-    [1, 2, 3], 
-    [-2, 5, 0], 
-    [3, -1, 4], 
-    [0, 0, 0], 
-    [7, 2, -1], 
-    [-3, 6, 2], 
-    [4, 4, 1], 
-    [-5, -3, 6], 
-    [2, -2, -2], 
-    [6, 1, 5]
-    ]
-centroids = np.array(centroids)
+    while q:
+        r, c, s = q.popleft()
 
-conn_vectors = centroids[1:] - centroids[:-1]
+        if s % 2 == 0:
+            ans.add((r, c))
+        if s == 0:
+            continue
 
-def get_cosine_angle(a, b):
-    a_mod = np.sqrt(np.dot(a, a))
-    b_mod = np.sqrt(np.dot(b, b))
+        for nr, nc in [(r + 1, c), (r - 1, c), (r, c + 1), (r, c - 1)]:
+            if nr < 0 or nr >= len(grid) or nc < 0 or nc >= len(grid[0]) or grid[nr][nc] == "#" or (nr, nc) in seen:
+                continue
+            seen.add((nr, nc))
+            q.append((nr, nc, s - 1))
+    
+    return len(ans)
 
-    cosine_angle = np.dot(a, b) / (a_mod*b_mod)
+grid_width = steps // size - 1
 
-    angle = np.arccos(cosine_angle) * 180 / np.pi
+odd = (grid_width // 2 * 2 + 1) ** 2
+even = ((grid_width + 1) // 2 * 2) ** 2
 
-    return angle
+odd_points = fill(sr, sc, size * 2 + 1)
+even_points = fill(sr, sc, size * 2)
 
+corner_t = fill(size - 1, sc, size - 1)
+corner_r = fill(sr, 0, size - 1)
+corner_b = fill(0, sc, size - 1)
+corner_l = fill(sr, size - 1, size - 1)
 
-print(conn_vectors[1:]-conn_vectors[:-1])
-print(list(map(lambda vec: get_cosine_angle(vec[1:], vec[:-1]), conn_vectors)))
-print(get_cosine_angle(np.array([0, 1]), np.array([1, 0])))
+small_tr = fill(size - 1, 0, size // 2 - 1)
+small_tl = fill(size - 1, size - 1, size // 2 - 1)
+small_br = fill(0, 0, size // 2 - 1)
+small_bl = fill(0, size - 1, size // 2 - 1)
+
+large_tr = fill(size - 1, 0, size * 3 // 2 - 1)
+large_tl = fill(size - 1, size - 1, size * 3 // 2 - 1)
+large_br = fill(0, 0, size * 3 // 2 - 1)
+large_bl = fill(0, size - 1, size * 3 // 2 - 1)
+
+print(
+    odd * odd_points +
+    even * even_points +
+    corner_t + corner_r + corner_b + corner_l +
+    (grid_width + 1) * (small_tr + small_tl + small_br + small_bl) +
+    grid_width * (large_tr + large_tl + large_br + large_bl)
+)
