@@ -75,7 +75,10 @@ for s in range(1, int(MAX_STEPS//N + 1)):
         odd_sum += 4*s
     else:
         even_sum += 4*s
-odd += 1
+odd_sum += 1
+grid_size = MAX_STEPS//N - 1
+# odd_sum = (grid_size//2 * 2 + 1)**2
+# even_sum = ((grid_size + 1)//2 * 2)**2
 
 print("Allowed states with even steps: ", even, "Total Sum of reachable states: ", even_sum)
 print("Allowed states with odd steps:  ", odd, "Total Sum of reachable states: ", odd_sum)
@@ -100,14 +103,15 @@ inner_fourth = reach(0, 0, 3*N//2 - 1)
 print("Solution Part 2: Sum of all the reachable states: ",
       even_sum*even + odd_sum*odd + 
       top_corner + bottom_corner + right_corner + left_corner +
-      (MAX_STEPS//N) * (outer_first + outer_second + outer_third + outer_fourth) + 
-      (MAX_STEPS//N - 1) * (inner_first + inner_second + inner_third + inner_fourth)
+      (grid_size+1) * (outer_first + outer_second + outer_third + outer_fourth) + 
+      (grid_size) * (inner_first + inner_second + inner_third + inner_fourth)
     )
 
-# 1404650519355872 too high
-# 592770703036352
-# 592770703043579
-#
+
+# 592764854955179
+
+# correct
+# 592723929260582
 
 
 
