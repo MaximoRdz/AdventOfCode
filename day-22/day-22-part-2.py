@@ -1,7 +1,10 @@
+from collections import deque
+
+
 # Your first task is to figure out which bricks are safe to disintegrate.
 # A brick can be safely disintegrated if, after removing it, no other
 # bricks would fall further directly downward.
-with open("day-22/example.txt", "r") as file:
+with open("day-22/input.txt", "r") as file:
     data = file.read().splitlines()
 
 
@@ -57,13 +60,19 @@ for j, upper in enumerate(bricks):
             supports[i].add(j) # i supports j
 
 
-# For each brick determine how many other would fall
+# For each brick determine how many other would fall (CHAIN-REACTION)
 
 count = 0
-for i in range(len(bricks)):
-    for s in supports[i]:
-        if len(supported_by[s]) < 2:
-            count += 1
-        
-print("Solution Part 2: ", count)
 
+for i in range(len(bricks)):
+    q = deque(s for s in supports[i] if len(supported_by[s])==1) # about to fall
+    falling = set(q)
+    while q:
+        conn_block_ind = q.pop() # fell when remove i ...
+        for s in supports[conn_block_ind]-falling:
+            if supported_by[s] <= falling: # subset of falling
+                q.append(s)
+                falling.add(s)
+    count += len(falling)
+
+print("Solution Part 2: ", count)
