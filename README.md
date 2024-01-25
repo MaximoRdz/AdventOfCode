@@ -9,4 +9,6 @@ Bibliography used to solve and understand the calendar puzzles.
 * Polygon Areas: 
     * [Shoelace Theorem](https://en.wikipedia.org/wiki/Shoelace_formula)
     * [Pick's Theorem](https://en.wikipedia.org/wiki/Pick%27s_theorem)
+* [Graph Edge Contraction](https://en.wikipedia.org/wiki/Edge_contraction)
+* [Depth-first search Algorithm](https://en.wikipedia.org/wiki/Depth-first_search)
 ---
