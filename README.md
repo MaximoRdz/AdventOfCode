@@ -11,4 +11,5 @@ Bibliography used to solve and understand the calendar puzzles.
     * [Pick's Theorem](https://en.wikipedia.org/wiki/Pick%27s_theorem)
 * [Graph Edge Contraction](https://en.wikipedia.org/wiki/Edge_contraction)
 * [Depth-first search Algorithm](https://en.wikipedia.org/wiki/Depth-first_search)
+* [SymPy](https://docs.sympy.org/latest/tutorials/intro-tutorial/intro.html)
 ---
