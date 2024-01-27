@@ -12,4 +12,5 @@ Bibliography used to solve and understand the calendar puzzles.
 * [Graph Edge Contraction](https://en.wikipedia.org/wiki/Edge_contraction)
 * [Depth-first search Algorithm](https://en.wikipedia.org/wiki/Depth-first_search)
 * [SymPy](https://docs.sympy.org/latest/tutorials/intro-tutorial/intro.html)
+* [Networkx Python Graph Lib](https://networkx.org/documentation/stable/tutorial.html)
 ---
