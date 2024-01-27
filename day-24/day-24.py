@@ -5,7 +5,7 @@ with open("day-24/input.txt", "r") as file:
     data = file.readlines()   
 particles = [
     tuple(
-        [int(n) for n in line.replace("@", ",").replace(" ", "").split(",")]
+        [int(n) for n in line.replace("@", ",").split(",")]
         ) for line in data
     ] 
 
