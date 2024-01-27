@@ -1,36 +1,49 @@
-with open("day-24/example.txt", "r") as file:
+import sympy
+
+
+with open("day-24/input.txt", "r") as file:
     data = file.readlines()   
+
+# Faster Approach
 particles = [
     tuple(
-        [int(n) for n in line.replace("@", ",").replace(" ", "").split(",")]
+        [int(n) for n in line.replace("@", ",").split(",")]
         ) for line in data
     ] 
 
+xr, yr, zr, vxr, vyr, vzr = sympy.symbols("xr, yr, zr, vxr, vyr, vzr")
+equations = []
 
-def get_sign(a):
-    if a==0:
-        return 0
-    elif a>0:
-        return 1
-    else:
-        return -1
-    
-RX = [float("-inf"), float("inf")]
-RY = [float("-inf"), float("inf")]
-RZ = [float("-inf"), float("inf")]
-def update_range(p, v, r):
-    if get_sign(v)==1:
-        r[0] = max(r[0], p)
-    elif get_sign(vxa)==-1:
-        r[1] = min(r[1], p)
-        
-for A in particles:
-    xa, ya, za, vxa, vya, vza  = A
-    update_range(xa, vxa, RX)
-    update_range(ya, vya, RY)
-    update_range(za, vza, RZ)
+for i, (sx, sy, sz, vx, vy, vz) in enumerate(particles):
+    equations.append(
+        (xr - sx) * (vy - vyr) - (yr - sy) * (vx - vxr)
+    )
+    equations.append(
+        (yr - sy) * (vz - vzr) - (zr - sz) * (vy - vyr)
+    )
+    if i < 2:
+        # At least 4 eqns so not so many solutions are found.
+        continue
 
-    print(RX, RY, RZ)
+    answers = [ans for ans in sympy.solve(equations) if all(x%1==0 for x in ans.values())]
 
+    if len(answers) == 1:
+        print("Solution Part 2: ", sum(answers[0][p] for p in [xr, yr, zr]), f"Iterations: {i}")
+        break
 
+# First solution.
+
+# xr, yr, zr, vxr, vyr, vzr = sympy.symbols("xr, yr, zr, vxr, vyr, vzr")
+# equations = []
+
+# for sx, sy, sz, vx, vy, vz in particles:
+#     equations.append(
+#         (xr - sx) * (vy - vyr) - (yr - sy) * (vx - vxr)
+#     )
+#     equations.append(
+#         (yr - sy) * (vz - vzr) - (zr - sz) * (vy - vyr)
+#     )
+
+# answer = sympy.solve(equations)
+# print("Solution Part 2: ", sum(answer[0][p] for p in [xr, yr, zr]))
 
