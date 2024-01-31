@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include <stdlib.h>
+
 
 using namespace std;
 
@@ -13,12 +13,14 @@ int main()
 
     if (file.is_open())
     {
-        while (getline(file, line))
+        char c;
+        while (file.get(c))
         {
-            int calory = 0;
-            calory = stoi(line);
-            // have a look at <vector>
-            cout << calory << "\n";
+            if (c == '\n')
+            {
+                cout << "hola";
+            }
+            cout << c;
         }
         file.close();
     }
