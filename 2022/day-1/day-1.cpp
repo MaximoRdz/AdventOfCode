@@ -13,14 +13,28 @@ int main()
 
     if (file.is_open())
     {
-        char c;
-        while (file.get(c))
+        char new_char, last_char;
+        int total_calories = 0;
+        string number = "";
+
+        while (file.get(new_char))
         {
-            if (c == '\n')
+            if (new_char == '\n')
             {
-                cout << "hola";
+                if (last_char == '\n'){
+                    // keep max and continue 
+                    cout << "total: " << total_calories << endl;
+                    number.clear();
+                    continue;
+                }
+                // string to int update sum
+                total_calories += stoi(number);
+                cout << stoi(number) << endl;
+                number.clear();
+            } else {
+                number = number + new_char;
+                last_char = new_char;
             }
-            cout << c;
         }
         file.close();
     }
