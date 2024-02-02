@@ -6,42 +6,51 @@
 using namespace std;
 
 
-int main()
+int max (int a, int b)
+{
+    if (a > b)
+    {
+        return a;
+    } else {
+        return b;
+    }
+}
+
+
+int main ()
 {
     string line;
-    ifstream file ("./example.txt");
+    ifstream file ("./input.txt");
+
+    char new_char, last_char;
+    int total_calories = 0, max_calories = 0;
+    string number = "";
 
     if (file.is_open())
     {
-        char new_char, last_char;
-        int total_calories = 0;
-        string number = "";
-
         while (file.get(new_char))
         {
             if (new_char == '\n')
             {
                 if (last_char == '\n'){
-                    // keep max and continue 
-                    cout << "total: " << total_calories << endl;
-                    number.clear();
-                    continue;
+                    // keep max reset and continue 
+                    max_calories = max(max_calories, total_calories);
+                    total_calories = 0;
+                } else {
+                    // string to int update sum
+                    total_calories += stoi(number);
                 }
-                // string to int update sum
-                total_calories += stoi(number);
-                cout << stoi(number) << endl;
                 number.clear();
             } else {
                 number = number + new_char;
-                last_char = new_char;
             }
+            last_char = new_char;
         }
         file.close();
     }
     else cout << "File not opened.";
 
+    cout << "Solution Part 1: " << max_calories << endl;
+
     return 0;
 }
-
-
-
