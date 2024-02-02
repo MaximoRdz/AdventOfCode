@@ -19,7 +19,6 @@ int max (int a, int b)
 
 int main ()
 {
-    string line;
     ifstream file ("./input.txt");
 
     char new_char, last_char;
