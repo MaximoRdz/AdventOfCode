@@ -1,5 +1,6 @@
 # AdventOfCode
 Bibliography used to solve and understand the calendar puzzles. 
+## Python
 * [Algorithms Theory](https://www.codesdope.com/course/algorithms-introduction/)
 * [Point in Polygon Algorithm](https://en.wikipedia.org/wiki/Point_in_polygon)
 * [Deque Data Structure](https://docs.python.org/3/library/collections.html#collections.deque)
@@ -13,4 +14,6 @@ Bibliography used to solve and understand the calendar puzzles.
 * [Depth-first search Algorithm](https://en.wikipedia.org/wiki/Depth-first_search)
 * [SymPy](https://docs.sympy.org/latest/tutorials/intro-tutorial/intro.html)
 * [Networkx Python Graph Lib](https://networkx.org/documentation/stable/tutorial.html)
+## C++
+* [Cplusplus](https://cplusplus.com/doc/tutorial/)
 ---
