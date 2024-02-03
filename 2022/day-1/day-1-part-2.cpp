@@ -18,13 +18,24 @@ int max (int a, int b)
 }
 
 
-void bubble_sort(vector <int>& vector_address)
+void bubble_sort(vector <int>& vector_reference)
 {
     // highly inefficient but appropriate for our
     // c++ journy beginins
-    vector_address[2] = 42;
-    cout << vector_address[0] << endl;
-    cout << vector_address.size();
+    int aux;
+    
+    for (int i=0; i < vector_reference.size(); i++)
+    {
+        for (int j = 0; j < vector_reference.size()-1; j++)
+        {
+            if (vector_reference.at(j) < vector_reference.at(j+1))
+            {
+                aux = vector_reference.at(j+1);
+                vector_reference.at(j+1) = vector_reference.at(j);
+                vector_reference.at(j) = aux;
+            }
+        }
+    }
 
 
 }
@@ -32,7 +43,7 @@ void bubble_sort(vector <int>& vector_address)
 
 int main ()
 {
-    ifstream file ("./example.txt");
+    ifstream file ("./input.txt");
 
     char new_char, last_char;
     int total_calories = 0; 
@@ -59,22 +70,23 @@ int main ()
             }
             last_char = new_char;
         }
+
+        // push back extra last number: 
+        elf_calories.push_back(total_calories + stoi(number));
+
         file.close();
     }
     else cout << "File not opened.";
+    
+    // for (int i=0; i < elf_calories.size(); i++)
+    // {
+    //     cout << elf_calories[i] << endl;
+    // }
 
-    for (int i=0; i < elf_calories.size(); i++)
-    {
-        cout << elf_calories[i] << "\n\b";
-    }
-    
-    cout << "pass to bubble: " << endl; 
-    
     bubble_sort(elf_calories);
     
-    for (int i=0; i < elf_calories.size(); i++)
-    {
-        cout << elf_calories[i] << "\n\b";
-    }
+    cout << "Solution Part 2: " << (elf_calories[0] +
+                                    elf_calories[1] +
+                                    elf_calories[2]) << endl; 
 
 }
