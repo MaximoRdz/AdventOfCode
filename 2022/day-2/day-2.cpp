@@ -77,7 +77,7 @@ int play_result(char play, char response)
 
 int main()
 {
-    ifstream file("./input.txt");
+    ifstream file("./example.txt");
     string line;
     char play, response;
     int ans = 0;
