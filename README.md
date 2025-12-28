@@ -26,4 +26,7 @@ Bibliography used to solve and understand the calendar puzzles.
 
 * [kdtree](https://en.wikipedia.org/wiki/K-d_tree)
 * [DisJoint-set-data-structure](https://en.wikipedia.org/wiki/Disjoint-set_data_structure)
+* [Summed-area table / integral image](https://en.wikipedia.org/wiki/Summed-area_table)
+* [Largest Rectangle in a Histogram](https://algotree.org/algorithms/stack_based/largest_rectangle_in_histogram/)
+* [Coordinates Compression](https://usaco.guide/silver/sorting-custom?lang=cpp#coordinate-compression)
 ---
