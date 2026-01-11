@@ -29,4 +29,5 @@ Bibliography used to solve and understand the calendar puzzles.
 * [Summed-area table / integral image](https://en.wikipedia.org/wiki/Summed-area_table)
 * [Largest Rectangle in a Histogram](https://algotree.org/algorithms/stack_based/largest_rectangle_in_histogram/)
 * [Coordinates Compression](https://usaco.guide/silver/sorting-custom?lang=cpp#coordinate-compression)
+* [Gauss-Jordan Elimination](https://cp-algorithms.com/linear_algebra/linear-system-gauss.html)
 ---
