@@ -2,7 +2,7 @@
 
 Bibliography used to solve and understand the calendar puzzles. 
 
-## Python
+## 2023 -- Python
 
 * [Algorithms Theory](https://www.codesdope.com/course/algorithms-introduction/)
 * [Point in Polygon Algorithm](https://en.wikipedia.org/wiki/Point_in_polygon)
@@ -18,11 +18,11 @@ Bibliography used to solve and understand the calendar puzzles.
 * [SymPy](https://docs.sympy.org/latest/tutorials/intro-tutorial/intro.html)
 * [Networkx Python Graph Lib](https://networkx.org/documentation/stable/tutorial.html)
 
-## C++
+## 2022 -- C++
 
 * [Cplusplus](https://cplusplus.com/doc/tutorial/)
 
-## JavaScript
+## 2025 -- JavaScript
 
 * [kdtree](https://en.wikipedia.org/wiki/K-d_tree)
 * [DisJoint-set-data-structure](https://en.wikipedia.org/wiki/Disjoint-set_data_structure)
